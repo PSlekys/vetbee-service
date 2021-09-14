@@ -3,10 +3,14 @@ const cors = require('cors');
 
 const { port } = require('./config');
 
+const pets = require('./routes/v1/pets');
+
 const app = express();
 
 app.use(express.json());
 app.use(cors());
+
+app.use('/v1/pets/', pets);
 
 app.get('/', (req, res) => {
   res.send({ msg: 'Server is running' });
