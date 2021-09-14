@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const logger = require('./logger');
 
 const { port } = require('./config');
 
@@ -20,7 +21,8 @@ app.get('/', (req, res) => {
 });
 
 app.all('*', (req, res) => {
+  logger.warn(`Page not found: ${req.url}`);
   res.status(404).send({ error: 'Page not found' });
 });
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(port, () => logger.info(`Listening on port ${port}`));

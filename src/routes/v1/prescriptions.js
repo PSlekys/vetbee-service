@@ -1,6 +1,7 @@
 const express = require('express');
 const mysql = require('mysql2/promise');
 const Joi = require('joi');
+const logger = require('../../logger');
 const { dbConfig } = require('../../config');
 
 const router = express.Router();
@@ -36,7 +37,7 @@ router.post('/', async (req, res) => {
   try {
     userInput = await presSchema.validateAsync(userInput);
   } catch (err) {
-    console.log(err);
+    logger.error(err);
     return res.status(400).send({ err: 'Incorrect data passed' });
   }
 
@@ -51,7 +52,7 @@ router.post('/', async (req, res) => {
 
     return res.send(data);
   } catch (err) {
-    console.log(err);
+    logger.error(err);
     return res.status(500).send({ err: 'Server error. Please try again.' });
   }
 });
